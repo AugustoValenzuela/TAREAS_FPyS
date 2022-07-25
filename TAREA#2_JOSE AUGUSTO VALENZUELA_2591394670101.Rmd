@@ -1,0 +1,97 @@
+#TAREA_2
+
+###FUNCIONES
+###estructura de una funcion
+```{r}
+"<nombre funcion> <- function(<lista de argumentos>){
+  <expresiones> 
+  return (<valor>)
+}
+<lista de argumentos>= Puede estar vacia o contener 1 o mas terminos, puede estar entre comillas ("").
+<expresion>= Es una expresion, al ser una expresion simple se devuelve el valor de la expresion.
+<valor>=Es una expresion, si se deja en vacio, devuelve NULL."
+
+"Este tipo de funciones es llamado de RETORNO, para diferenciarlo de las funciones primitivas
+Tienen tres coponentes, (formals) que son sus listas de argumentos, (body) y su (enviorment) que da el cierre."
+```
+
+```{r}
+#EJEMPLO_1: Creando funcion para calcular cilindro circular recto.
+
+volumen_cilindro <- function (radio,altura){
+  radio <- 
+  area <- radio*pi
+  altura<- 
+  volumen <- area*altura
+  
+  return(volumen)
+}
+
+vol_1 <- volumen_cilindro(1,2)
+vol_2 <- volumen_cilindro(15,0.5)
+vol_1
+vol_2
+
+```
+
+
+```{r}
+#FAMILIA APPLY
+"Tienen grandes similitudes con FOR, pero son mas facilies de utilizar.
+apply(<x>,<margin>, <fun>,...)
+<x>→ objeto al cual se desea aplicar apply
+<margin>→ especifica si se aplica a row or col
+<fun>→ la funcion por aplicar
+se pueden agregar otros valores
+"
+```
+```{r}
+#EJEMPLO_2:
+matriz_1 <- matrix(1:9,ncol=3,byrow=T)
+matriz_1
+
+apply(matriz_1,1,sum)
+apply(matriz_1,2,sum)
+
+
+```
+
+```{r}
+#Lapply
+"Devuelve una lista del mismo largo que X, que es el resultado de aplicar una funcion a cada elemento de X.
+lappy(<expresion>,<funcion>,...)"
+lista <- list(matriz_1)
+
+lista
+lapply(lista,sum)
+
+
+```
+```{r}
+#SAPPLY
+"Trabaja y tiene la misma forma de lapply, pero genera un vector, en caso de no poder devolver un vector genera una lista o matriz"
+?sapply
+
+sapply(lista, sum)
+lista
+```
+
+```{r}
+#VAPPLY
+"Trabaja de la misma forma que sapply, pero es necesario especificar el tipo de valor utilizado."
+
+a1 <- 0:10
+a2 <- 20:30
+
+mat <- matrix(c(a1,a2))
+mat
+
+vapply(mat,sum,FUN.VALUE=integer(1))
+```
+
+
+
+
+
+
+
