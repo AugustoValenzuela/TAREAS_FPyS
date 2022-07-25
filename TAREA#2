@@ -1,0 +1,7 @@
+echo "# TAREAS_FPyS" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/AugustoValenzuela/TAREAS_FPyS.git
+git push -u origin main
