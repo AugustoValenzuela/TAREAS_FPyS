@@ -1,0 +1,36 @@
+#TAREA3
+
+```{r}
+library(dplyr)
+install.packages("readr")
+file.choose()
+dataset_results <- read.csv("C:\\Users\\augus\\Downloads\\primary_results.csv")
+dataset_results
+
+dataset_results_FL <- dataset_results %>%
+  filter(state=="Florida",candidate=="Hillary Clinton"| candidate=="Donald Trump")
+
+dataset_results_FL
+
+dataset_results_Dem_Sh <- dataset_results %>%
+  filter(party=="Democrat",county=="Shelby")
+dataset_results_Dem_Sh
+
+dataset_results_Al1500 <- dataset_results %>%
+  filter(state=="Alabama",votes>=15000)
+dataset_results_Al1500
+
+dataset_results_TX_D <- dataset_results %>%
+  filter(state=="Texas",county=="Denton")%>%
+  select(party,candidate,votes)%>%
+  arrange(desc(votes))
+  
+dataset_results_TX_D
+
+
+
+
+```
+
+
+
