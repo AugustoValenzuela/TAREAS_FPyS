@@ -1,0 +1,68 @@
+```{r}
+library(dplyr)
+library(readr)
+library(ggplot2)
+
+diamonds <- read_csv("C:\\Users\\augus\\Downloads\\diamonds.csv")
+head(diamonds)
+str(diamonds)
+
+#DISPERSION
+diamonds_1 <- diamonds %>%
+  select(carat,price,clarity)
+diamonds_1
+
+ggplot(diamonds_1,aes(x=carat,y=price,color=clarity))+geom_point()
+
+#HISTOGRAMA
+
+diamonds_2 <- diamonds
+ggplot(diamonds_2,aes(x=price))+geom_histogram(bins=40)
+
+diamonds_3 <- diamonds
+ggplot(diamonds_3,aes(x=price))+geom_histogram(bins=40)+
+  scale_x_log10()
+
+
+#BOXPLOTS
+
+diamonds_4 <- diamonds
+
+ggplot(diamonds_4,aes(x=cut,y=price))+geom_boxplot()+
+  scale_y_log10()
+
+ggplot(diamonds_4,aes(x=cut,y=price,fill=cut))+geom_boxplot()+
+  scale_y_log10()
+
+
+#FACETING
+
+filtered_price <- diamonds %>%
+  filter(price>=1000, cut %in% c("Good","Ideal","Premium"))
+
+filtered_price
+
+ggplot(filtered_price, aes(x=cut,y=depth,fill=clarity))+geom_col()+
+  facet_grid(.~clarity)
+
+filtered_price
+
+#AGRUPANDO Y RESUMIENDO
+
+median_dimension_diamond <- diamonds %>%
+  group_by(cut)%>%
+  summarise(mediaX=median(x),medianY=median(y),mediaZ=median(z))
+
+median_dimension_diamond
+diamonds
+cut_premium <- diamonds%>%
+  filter(cut=="Premium")%>%
+  group_by(clarity)%>%
+  summarize(minPrice=min(price),maxPrice=max(price))
+  
+cut_premium
+
+ggplot(cut_premium,aes(x=clarity,y=maxPrice,filled.contour(clarity)))+geom_col()
+
+```
+
