@@ -1,0 +1,61 @@
+#TAREA5
+```{r}
+library(readr)
+library(tidyverse)
+file.choose()
+answers <- read_csv("C:\\Users\\augus\\Downloads\\CIENCIAS DE LA COMPUTACION\\TRIMESTRE_1_2022\\FUNDAMENTOS PROGRAMACION\\TAREA#5\\answers.csv")
+question_tags <- read_csv("C:\\Users\\augus\\Downloads\\CIENCIAS DE LA COMPUTACION\\TRIMESTRE_1_2022\\FUNDAMENTOS PROGRAMACION\\TAREA#5\\question_tags.csv")
+questions <- read_csv("C:\\Users\\augus\\Downloads\\CIENCIAS DE LA COMPUTACION\\TRIMESTRE_1_2022\\FUNDAMENTOS PROGRAMACION\\TAREA#5\\questions.csv")
+tags <- read_csv("C:\\Users\\augus\\Downloads\\CIENCIAS DE LA COMPUTACION\\TRIMESTRE_1_2022\\FUNDAMENTOS PROGRAMACION\\TAREA#5\\tags.csv")
+
+head(answers)
+head(question_tags)
+head(questions)
+head(tags)
+
+#LEFT JOINING questions & tags
+
+questions_with_tags <- questions%>%
+  left_join(question_tags,by=c("id"="question_id"))%>%
+  left_join(tags, by=c("id"))%>%
+  mutate_at(c("tag_name"),~replace_na("only-r"))
+questions_with_tags
+
+#Comparando resultados en las etiquetas
+library(dplyr)
+
+questions_with_tags%>%
+  group_by(id)%>%
+  summarize(mean_score=mean(score))%>%
+  arrange(desc(mean_score))
+
+#Encontrando saltos entre preguntas y respuestas
+
+questions_and_answers <- questions%>%
+  inner_join(answers,by=c("id"="question_id"),suffix=c("_question","_answer"))%>%
+  mutate(gap=creation_date_answer-creation_date_question)
+
+questions_and_answers
+
+#Uniendo la cuenta de preguntas y respuestas
+
+answers_count <- answers%>%
+  count(question_id,name="answers_counts")%>%
+  arrange(desc(answers_counts))
+answers_count
+
+relacion_answers_count_questions <- questions%>%
+  left_join(answers_count,by=c("id"="question_id"))%>%
+  mutate_at(c("answers_counts"),~replace_na(answers_counts,0))
+
+relacion_answers_count_questions
+
+#Uniendo preguntas, respuestas y etiquetas
+combinacion <- question_tags%>%
+  inner_join(questions_and_answers, by=c("question_id"="id"))%>%
+  inner_join(tags,by=c("tag_id"="id"))
+
+combinacion
+
+```
+
